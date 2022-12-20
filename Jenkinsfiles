@@ -1,0 +1,23 @@
+pipeline{
+    agent any
+    stages{
+        stage('github checkout'){
+            steps{
+                git branch: 'main', credentialsId: 'git_creds', url: 'https://github.com/premchand0908/devops-litmus/'
+            }
+        }
+        stage('maven package build'){
+            steps{
+                sh 'mvn clean package'
+            }
+        }
+        stage('tomcat deployment'){
+            steps{ sshagent(['tomcat']) {
+                    sh 'scp -o StrictHostKeyChecking=no /var/lib/jenkins/workspace/tomcat_deployment/target/myjob.war ec2-user@172.31.30.162:/opt/tomcat9/webapps'
+                    sh 'ssh ec2-user@172.31.30.162 /opt/tomcat9/bin/shutdown.sh'
+                    sh 'ssh ec2-user@172.31.30.162 /opt/tomcat9/bin/startup.sh'
+                }
+            }
+        }
+    }
+}
