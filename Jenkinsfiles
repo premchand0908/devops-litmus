@@ -14,7 +14,7 @@ pipeline{
         }
         stage('tomcat deployment'){
             steps{ 
-                tomcatReredeploy('172.31.30.162','ec2-user','tomcat')
+                tomcatReredeploy("172.31.30.162","ec2-user","tomcat")
             }
         }
     }
