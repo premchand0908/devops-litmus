@@ -1,3 +1,4 @@
+@Library('jenkins-shared-libs01') _
 pipeline{
     agent any
     stages{
@@ -13,11 +14,7 @@ pipeline{
         }
         stage('tomcat deployment'){
             steps{ 
-                sshagent(['tomcat']) {
-                sh 'scp -o StrictHostKeyChecking=no target/*.war ec2-user@172.31.30.162:/opt/tomcat9/webapps/'
-                sh 'ssh ec2-user@172.31.30.162 /opt/tomcat9/bin/shutdown.sh'
-                sh 'ssh ec2-user@172.31.30.162 /opt/tomcat9/bin/startup.sh'
-                }
+                tomcat-deploy('172.31.30.162','ec2-user','tomcat')
             }
         }
     }
