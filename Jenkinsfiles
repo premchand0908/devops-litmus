@@ -9,6 +9,7 @@ pipeline{
         stage('maven package build'){
             when{
                 branch 'develop'
+                }
             steps{
                 sh 'mvn clean package'
             }
