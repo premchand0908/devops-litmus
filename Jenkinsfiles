@@ -47,7 +47,7 @@ pipeline{
          branch 'main'
          }
          steps{
-         echo "deployed in prod03
+         echo "deployed in prod03"
          }
          }
     }
