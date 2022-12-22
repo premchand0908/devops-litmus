@@ -7,11 +7,17 @@ pipeline{
             }
         }
         stage('maven package build'){
+            when{
+                branch 'develop/prem/mbp001'
+                }
             steps{
                 sh 'mvn clean package'
             }
         }
-        stage('tomcat deployment'){
+        stage('tomcat deployment-dev'){
+        when{
+            branch 'develop/prem/mbp001'
+            }
             steps{ 
                sshagent(['tomcat']){
                     sh"scp -o StrictHostKeyChecking=no target/*.war ec2-user@172.31.30.162:/opt/tomcat9/webapps"
@@ -20,5 +26,21 @@ pipeline{
                 }
             }
         }
+        stage('tomcat deployment-prod'){
+            when{
+            branch 'main'
+            }
+            steps{ 
+               echo "deployed in production"
+            }
+        }
+        stage('tomcat deployment02-prod'){
+            when{
+                branch 'main'
+                }
+                steps{
+                    echo "deployed in prod02"
+                    }
+                    }
     }
 }
