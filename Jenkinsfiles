@@ -8,7 +8,7 @@ pipeline{
         }
         stage('maven package build'){
             when{
-                branch 'develop'
+                branch 'develop/prem/mbp001'
                 }
             steps{
                 sh 'mvn clean package'
@@ -16,7 +16,7 @@ pipeline{
         }
         stage('tomcat deployment-dev'){
         when{
-            branch 'develop'
+            branch 'develop/prem/mbp001'
             }
             steps{ 
                sshagent(['tomcat']){
@@ -34,5 +34,13 @@ pipeline{
                echo "deployed in production"
             }
         }
+        stage('tomcat deployment02-prod'){
+            when{
+                branch 'main'
+                }
+                steps{
+                    echo "deployed in prod02"
+                    }
+                    }
     }
 }
