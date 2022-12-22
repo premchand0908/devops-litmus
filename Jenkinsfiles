@@ -42,5 +42,13 @@ pipeline{
                     echo "deployed in prod02"
                     }
                     }
+         stage('tomcat deployment-03'){
+         when{
+         branch 'main'
+         }
+         steps{
+         echo "deployed in prod03
+         }
+         }
     }
 }
