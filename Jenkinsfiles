@@ -1,4 +1,4 @@
-@Library('jenkins-libs01') _
+@Library('jenkins-libs') _
 pipeline{
     agent any
     stages{
